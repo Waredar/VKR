@@ -1,0 +1,37 @@
+﻿#ifndef __VSN_SPHEREREP_H
+#define __VSN_SPHEREREP_H
+
+#include <vsn_geometryrep.h>
+
+namespace VSN {
+
+/* SphereRep */
+class VSN_CLASS SphereRep : public GeometryRep
+{
+    VSN_OBJECT(SphereRep);
+    VSN_PROP_READ_WRITE(deviation, GetDeviation, SetDeviation);
+    VSN_PROP_READ_WRITE_NOTIFY(radius, GetRadius, SetRadius, RadiusModified);
+public:
+    explicit SphereRep(Node* pParent = nullptr);
+    explicit SphereRep(float radius, float deviation, Node* pParent = nullptr);
+    virtual ~SphereRep();
+public:
+    /// \ru Вернуть радиус сферы. \en Set radius.
+    float GetRadius() const;
+    /// \ru Вернуть отклонение для расчета полигона. \en Set polygon deviation.
+    float GetDeviation() const;
+public:
+    /// \ru Задать радиус сферы. \en Set radius.
+    VSN_SLOT(Public, SetRadius, void SetRadius(float radius))
+    /// \ru Задать отклонение для расчета полигона. \en Set polygon deviation.
+    VSN_SLOT(Public, SetDeviation, void SetDeviation(float deviation))
+public:
+    VSN_SIGNAL(Public, RadiusModified, void RadiusModified(float radius), radius)
+private:
+    VSN_DISABLE_COPY(SphereRep);
+};
+
+} // namespace VSN
+
+#endif /* __VSN_SPHEREREP_H */
+
